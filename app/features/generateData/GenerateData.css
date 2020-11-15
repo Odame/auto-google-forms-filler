@@ -1,0 +1,16 @@
+.generateData {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.progressText {
+  margin: 18px;
+  font-size: 24px;
+}
+
+.ghostButton {
+  opacity: 0;
+}

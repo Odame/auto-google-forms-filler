@@ -5,11 +5,13 @@ import { History } from 'history';
 // eslint-disable-next-line import/no-cycle
 import counterReducer from './features/counter/counterSlice';
 import controlPanelReducer from './features/controlPanel/controlPanelSlice';
+import generatedDataReducer from './features/generateData/generatedDataSlice';
 
 export default function createRootReducer(history: History) {
   return combineReducers({
     router: connectRouter(history),
     counter: counterReducer,
     controlPanel: controlPanelReducer,
+    generatedData: generatedDataReducer,
   });
 }
