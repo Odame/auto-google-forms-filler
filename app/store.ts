@@ -3,6 +3,7 @@ import { createHashHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import { ThunkAction } from 'redux-thunk';
+import { useSelector, TypedUseSelectorHook } from 'react-redux';
 // eslint-disable-next-line import/no-cycle
 import createRootReducer from './rootReducer';
 
@@ -45,3 +46,4 @@ export const configuredStore = (initialState?: RootState) => {
 };
 export type Store = ReturnType<typeof configuredStore>;
 export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>;
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
