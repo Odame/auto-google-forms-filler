@@ -52,10 +52,7 @@ function ControlPanel({ className }: Props) {
       <Form.Item
         name="numSamples"
         label="How many data samples?"
-        rules={[
-          { required: true, message: 'Number of Samples is required!' },
-          { min: 1, message: 'Please enter a number greater than zero' },
-        ]}
+        rules={[{ required: true, message: 'Number of Samples is required!' }]}
       >
         <InputNumber />
       </Form.Item>
