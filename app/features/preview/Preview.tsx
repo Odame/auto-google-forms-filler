@@ -65,6 +65,7 @@ const Preview = () => {
           responsive
           total={generatedDataArray.length}
           pageSize={1}
+          pageSizeOptions={[]}
         />
       </div>
 
