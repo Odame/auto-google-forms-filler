@@ -1,5 +1,5 @@
 import { Button, Progress, Result, Typography } from 'antd';
-import { push, replace } from 'connected-react-router';
+import { replace } from 'connected-react-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,7 @@ import styles from './GenerateData.css';
 const { Text } = Typography;
 
 /** Randomly select a single item from an array of choices */
-const randomChoice = <T extends any>(choices: Array<T>): T => {
+const randomChoice = <T extends unknown>(choices: Array<T>): T => {
   return choices[Math.floor(Math.random() * choices.length)];
 };
 const randBool = () => randomChoice([true, false]);
@@ -133,6 +133,7 @@ const generateRandomData = () => {
 
   // for multi select fields, randomly explicitly set one of them to true
   // since it is a required field
+  data.twelve[randomChoice<FourOptions>(['a', 'b', 'c', 'd'])] = true;
   data.sixteen[
     randomChoice<SevenOptions>(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
   ] = true;
@@ -199,7 +200,6 @@ const GenerateData: React.FunctionComponent = () => {
       return dataArray;
     })()
       .then((data) => {
-        console.log(data);
         // make sure component is still mounted before dispatching actions
         if (isComponentMounted) {
           dispatch(setGeneratedData(data));
