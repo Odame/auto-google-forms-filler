@@ -1,4 +1,8 @@
 {
   "HOME": "/",
-  "COUNTER": "/counter"
+  "COUNTER": "/counter",
+  "GENERATE_DATA": "/generating-data",
+  "PREVIEW": "/preview",
+  "SUBMISSION": "/submission",
+  "ANOTHER": "/another"
 }
