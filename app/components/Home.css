@@ -1,14 +1,59 @@
 .container {
-  position: absolute;
-  top: 30%;
-  left: 10px;
-  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.sider {
+  margin: 18px;
+  padding: 0.5em;
+  max-width: 200px;
+  flex-grow: 0;
+
+  /* min-width: 300px; */
+  font-size: 2em !important;
+  text-align: right;
+  line-height: 2.3em;
+  white-space: pre-line;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: right;
+}
+.title {
+  font-size: 2em !important;
 }
 
-.container h2 {
-  font-size: 5rem;
+.divider {
+  height: 50%;
+  width: 1px;
+  background-color: black;
+  opacity: 0.75;
+  flex-grow: 0;
 }
 
-.container a {
-  font-size: 1.4rem;
+.controlPanel {
+  margin: 18px;
+  padding: 0.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
+}
+
+.googleFormsIconContainer {
+  flex-grow: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.googleFormIcon {
+  width: 200px;
+  margin-bottom: 30px;
+
+  /* opacity: 0.75; */
+  -webkit-box-reflect: below 5px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(rgba(250, 250, 250, 0.1)));
 }
