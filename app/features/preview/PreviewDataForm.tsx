@@ -102,7 +102,7 @@ export default function PreviewDataForm({ initialIndex, form, data }: Props) {
                 rules={[{ required: true }]}
               >
                 <Radio.Group>
-                  <Radio className={styles.verticalRadio} value="marital">
+                  <Radio className={styles.verticalRadio} value="married">
                     Married
                   </Radio>
                   <Radio className={styles.verticalRadio} value="single">
