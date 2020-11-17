@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Checkbox, Form, Input, InputNumber, Radio, Typography } from 'antd';
+import { Checkbox, Form, Input, InputNumber, Radio } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { NamePath } from 'antd/lib/form/interface';
 import React from 'react';
