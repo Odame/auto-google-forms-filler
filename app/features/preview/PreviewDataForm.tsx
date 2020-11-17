@@ -7,8 +7,6 @@ import IGeneratedData from '../generateData/types';
 import { unnamedValidateMessages } from './formMessages';
 import styles from './Preview.css';
 
-const { Text } = Typography;
-
 const layout = {
   // labelCol: { span: 24 },
   wrapperCol: { offset: 1, span: 22 },

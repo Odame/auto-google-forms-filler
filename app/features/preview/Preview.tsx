@@ -30,7 +30,6 @@ const Preview = () => {
         currPage - 1,
         key,
       ]);
-      console.log(fieldsToValidate);
       // user is allowed to transition to another page, only if the current page's form's data is valid
       form
         .validateFields(fieldsToValidate)
@@ -44,7 +43,8 @@ const Preview = () => {
         })
         .catch((errors) => {
           message.error('Data on the current page is invalid!');
-          console.error(errors);
+          // eslint-disable-next-line no-console
+          console.error('Validation errors on preview page ', errors);
         });
     },
     [currPage, dispatch, form]
