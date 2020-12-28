@@ -1,20 +1,43 @@
+import { Moment } from 'moment';
+
 type Department = 'DnM' | 'WSV' | 'BDT' | 'CPL' | 'Production';
 type ISex = 'male' | 'female' | 'preferNotToSay' | 'other';
 type IMaritalStatus = 'married' | 'single';
-type IAgeRange =
+export type IAgeRange =
   | 'from18To25'
-  | 'from24To35'
+  | 'from25To35'
   | 'from35To45'
   | 'from45To55'
   | 'from55To60'
   | 'over60';
-type IWorkExperienceRange =
+export const ageRangesNum: Record<IAgeRange, [number, number]> = {
+  from18To25: [18, 24],
+  from25To35: [25, 34],
+  from35To45: [35, 44],
+  from45To55: [45, 54],
+  from55To60: [55, 59],
+  over60: [60, 100],
+};
+
+export type IWorkExperienceRange =
   | 'from1To5'
   | 'from5To10'
   | 'from10To15'
   | 'from15To20'
   | 'from20To25'
   | 'above26';
+export const workExperienceRangesNum: Record<
+  IWorkExperienceRange,
+  [number, number]
+> = {
+  from1To5: [1, 4],
+  from5To10: [5, 9],
+  from10To15: [10, 14],
+  from15To20: [15, 19],
+  from20To25: [20, 24],
+  above26: [25, 100], // 100 is used to represent a large value for a work experience
+};
+
 type IEducationLevel =
   | 'certificate'
   | 'diploma'
@@ -101,44 +124,19 @@ export default interface IGeneratedData {
   dateOfCompletion: string;
 }
 
+const five: Array<IEducationLevel> = [
+  'certificate',
+  'diploma',
+  'undergraduateDiploma',
+  'postgraduateDiploma',
+];
 export const dataFieldChoices = {
   one: ['DnM', 'WSV', 'BDT', 'CPL', 'Production'] as Array<Department>,
   two: ['male', 'female', 'preferNotToSay', 'other'] as Array<ISex>,
   twoOther: ['Agender', 'Androgyne', 'Bigender'],
   three: ['married', 'single'] as Array<IMaritalStatus>,
-  four: [
-    'from18To25',
-    'from24To35',
-    'from35To45',
-    'from45To55',
-    'from55To60',
-    'over60',
-  ] as Array<IAgeRange>,
-  five: [
-    'certificate',
-    'diploma',
-    'undergraduateDiploma',
-    'postgraduateDiploma',
-  ] as Array<IEducationLevel>,
-  six: [
-    'from1To5',
-    'from5To10',
-    'from10To15',
-    'from15To20',
-    'from20To25',
-    'above26',
-  ] as Array<IWorkExperienceRange>,
+  four: Object.keys(ageRangesNum) as Array<IAgeRange>,
+  five,
+  six: Object.keys(workExperienceRangesNum) as Array<IWorkExperienceRange>,
   eight: ['yes', 'no', 'maybe'] as Array<YesNoMaybe>,
-};
-
-export const workExperienceRangesNum: Record<
-  IWorkExperienceRange,
-  [number, number]
-> = {
-  from1To5: [1, 5],
-  from5To10: [5, 10],
-  from10To15: [10, 15],
-  from15To20: [15, 20],
-  from20To25: [20, 25],
-  above26: [25, 40],
 };

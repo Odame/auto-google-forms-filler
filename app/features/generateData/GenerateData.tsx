@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CloseCircleOutlined, LeftOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import { useTypedSelector } from '../../store';
 import { setGeneratedData } from './generatedDataSlice';
 import IGeneratedData, {
@@ -13,9 +14,12 @@ import IGeneratedData, {
   SevenOptions,
   SixOptions,
   workExperienceRangesNum,
+  ageRangesNum,
   YearDivision,
   YesNo,
   YesNoMaybe,
+  IAgeRange,
+  IWorkExperienceRange,
 } from './types';
 import routes from '../../constants/routes.json';
 import styles from './GenerateData.css';
@@ -40,9 +44,26 @@ const randInt = (min: number, max: number) => {
   return randomChoice(choices);
 };
 
+/** Get a random work experience, based in age range */
+const randomWorkExperience = (age: IAgeRange): IWorkExperienceRange => {
+  const [, ageMax] = ageRangesNum[age];
+  /** The maximum work experience that can be achieved based on age range */
+  const maxPossibleWorkExperience = Math.max(1, ageMax - 20);
+  const choices = Object.entries(workExperienceRangesNum).reduce<
+    IWorkExperienceRange[]
+  >((prev, curr) => {
+    const [range, [, max]] = curr;
+    if (max <= maxPossibleWorkExperience)
+      return [...prev, range as IWorkExperienceRange];
+    return prev;
+  }, [] as Array<IWorkExperienceRange>);
+  return randomChoice(choices);
+};
+
 const generateRandomData = () => {
   const sex = randomChoice(dataFieldChoices.two);
-  const workExperience = randomChoice(dataFieldChoices.six);
+  const age = randomChoice(dataFieldChoices.four);
+  const workExperience = randomWorkExperience(age);
   const isTrainingOfferedByENI = randYesNo();
   const data: IGeneratedData = {
     one: randomChoice(dataFieldChoices.one),
@@ -50,10 +71,11 @@ const generateRandomData = () => {
     twoOther:
       sex === 'other' ? randomChoice(dataFieldChoices.twoOther) : undefined,
     three: randomChoice(dataFieldChoices.three),
-    four: randomChoice(dataFieldChoices.four),
+    four: age,
     five: randomChoice(dataFieldChoices.five),
     six: workExperience,
-    seven: randInt(...workExperienceRangesNum[workExperience]),
+    // must have worked at least 1 year for ENI, but not more than total work experience
+    seven: randInt(1, workExperienceRangesNum[workExperience][1]),
     eight: randomChoice(dataFieldChoices.eight),
     nine: {
       a: randBool(),
@@ -128,11 +150,12 @@ const generateRandomData = () => {
       g: randBool(),
     },
     twentyEight: '',
-    dateOfCompletion: '',
+    dateOfCompletion: moment().format(),
   };
 
   // for multi select fields, randomly explicitly set one of them to true
   // since it is a required field
+  data.nine[randomChoice<FourOptions>(['a', 'b', 'c', 'd'])] = true;
   data.twelve[randomChoice<FourOptions>(['a', 'b', 'c', 'd'])] = true;
   data.sixteen[
     randomChoice<SevenOptions>(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
@@ -223,7 +246,9 @@ const GenerateData: React.FunctionComponent = () => {
           setHasError(true);
         }
         // eslint-disable-next-line no-console
-        console.error('There were some problems with generating data.', err);
+        console.error('There were some problems with generating data.');
+        // eslint-disable-next-line no-console
+        console.error(err);
       });
 
     // eslint-disable-next-line consistent-return
