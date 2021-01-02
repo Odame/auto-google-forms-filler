@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Checkbox, Form, Input, InputNumber, Radio } from 'antd';
+import { Checkbox, DatePicker, Form, Input, InputNumber, Radio } from 'antd';
+import { DatePickerProps } from 'antd/lib/date-picker';
 import { FormInstance } from 'antd/lib/form';
+import FormItem from 'antd/lib/form/FormItem';
 import { NamePath } from 'antd/lib/form/interface';
+import moment, { Moment } from 'moment';
 import React from 'react';
 import IGeneratedData from '../generateData/types';
 import { unnamedValidateMessages } from './formMessages';
@@ -405,7 +408,7 @@ export default function PreviewDataForm({ initialIndex, form, data }: Props) {
                 rules={[{ required: true }]}
                 name={['data', index, 'dateOfCompletion']}
               >
-                <Input placeholder="Your answer" />
+                <DateInput />
               </Form.Item>
             </>
           );
@@ -503,5 +506,24 @@ const MultiSelectFormItem: React.FunctionComponent<{
         );
       })}
     </Form.Item>
+  );
+};
+
+type DateInputProps = {
+  value?: string | null;
+  onChange?: (m: string | null) => void;
+};
+const DateInput: React.FunctionComponent<
+  DateInputProps & Omit<DatePickerProps, 'value' | 'onChange'>
+> = ({ value, onChange, ...datePickerProps }) => {
+  const onDatePickerValueChange = (date: Moment | null) => {
+    if (onChange) onChange(date?.format() || null);
+  };
+  return (
+    <DatePicker
+      value={value ? moment(value) : null}
+      onChange={onDatePickerValueChange}
+      {...datePickerProps}
+    />
   );
 };
