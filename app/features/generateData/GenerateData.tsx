@@ -60,6 +60,29 @@ const randomWorkExperience = (age: IAgeRange): IWorkExperienceRange => {
   return randomChoice(choices);
 };
 
+/**
+ * Generate a random date string
+ * @param startDate The oldest possible date (inclusive) to start from.
+ * Should be in the format DD-MM-YYYY, DD.MM.YYYY, DD/MM/YYYY
+ * @param upToNumDays The random number of days to shift into the future, from `startDate`.
+ * @param endDate The earliest date possible date.
+ * Should be in the format DD-MM-YYYY, DD.MM.YYYY, DD/MM/YYYY
+ */
+const randomDate = (
+  startDate: moment.Moment,
+  endDate: moment.Moment = moment(), // defaults to current date
+  includeStartDate = true
+) => {
+  let diffDays = endDate.diff(startDate, 'days');
+  if (diffDays < 0)
+    throw Error(
+      `startDate: ${startDate} should be older than endDate: ${endDate}`
+    );
+  diffDays += includeStartDate ? 1 : 0;
+
+  return startDate.add(randInt(0, diffDays), 'days').format();
+};
+
 const MAX_YEARS_WITH_ENI = 7;
 const generateRandomData = () => {
   const sex = randomChoice(dataFieldChoices.two);
@@ -69,8 +92,8 @@ const generateRandomData = () => {
   const data: IGeneratedData = {
     one: randomChoice(dataFieldChoices.one),
     two: sex,
-    twoOther:
-      sex === 'other' ? randomChoice(dataFieldChoices.twoOther) : undefined,
+    // twoOther:
+    //   sex === 'other' ? randomChoice(dataFieldChoices.twoOther) : undefined,
     three: randomChoice(dataFieldChoices.three),
     four: age,
     five: randomChoice(dataFieldChoices.five),
@@ -155,7 +178,8 @@ const generateRandomData = () => {
       g: randBool(),
     },
     twentyEight: '',
-    dateOfCompletion: moment().format(),
+    // random date starting from October 2020
+    dateOfCompletion: randomDate(moment('01-10-2020', 'DD-MM-YYYY')),
   };
 
   // for multi select fields, randomly explicitly set one of them to true
@@ -295,7 +319,7 @@ const GenerateData: React.FunctionComponent = () => {
               </Button>
             </Link>
           ) : (
-            // unused button, just to enure visual consistency when transitioning to "completed" state
+            // unused button, just to ensure visual consistency when transitioning to "completed" state
             <Button className={styles.ghostButton} type="ghost" />
           )}
         </>
