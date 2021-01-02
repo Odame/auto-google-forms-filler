@@ -60,6 +60,7 @@ const randomWorkExperience = (age: IAgeRange): IWorkExperienceRange => {
   return randomChoice(choices);
 };
 
+const MAX_YEARS_WITH_ENI = 7;
 const generateRandomData = () => {
   const sex = randomChoice(dataFieldChoices.two);
   const age = randomChoice(dataFieldChoices.four);
@@ -74,8 +75,12 @@ const generateRandomData = () => {
     four: age,
     five: randomChoice(dataFieldChoices.five),
     six: workExperience,
-    // must have worked at least 1 year for ENI, but not more than total work experience
-    seven: randInt(1, workExperienceRangesNum[workExperience][1]),
+    // must have worked at least 1 year for ENI,
+    // but not more than MAX_YEARS_WITH_ENI or total work experience
+    seven: randInt(
+      1,
+      Math.max(MAX_YEARS_WITH_ENI, workExperienceRangesNum[workExperience][1])
+    ),
     eight: randomChoice(dataFieldChoices.eight),
     nine: {
       a: randBool(),
