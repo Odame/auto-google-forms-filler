@@ -30,13 +30,15 @@ This project was bootstrapped from:
 
 ## Features
 
-- [ ] Generate data for google form
+- [x] Generate data for google form
 
-- [ ] Specify number of data samples to be generated
+- [x] Specify number of data samples to be generated
 
-- [ ] Preview generated data before submission
+- [x] Preview generated data before submission
 
-- [ ] Pre-edit generated data before submission
+- [x] Pre-edit generated data before submission
+
+- [ ] Auto-fill google form and submit
 
 - [ ] Run in headless mode
 
