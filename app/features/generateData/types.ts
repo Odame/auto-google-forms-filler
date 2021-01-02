@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 
 type Department = 'DnM' | 'WSV' | 'BDT' | 'CPL' | 'Production';
-type ISex = 'male' | 'female' | 'preferNotToSay' | 'other';
+type ISex = 'male' | 'female' | 'preferNotToSay';
 type IMaritalStatus = 'married' | 'single';
 export type IAgeRange =
   | 'from18To25'
@@ -132,7 +132,7 @@ const five: Array<IEducationLevel> = [
 ];
 export const dataFieldChoices = {
   one: ['DnM', 'WSV', 'BDT', 'CPL', 'Production'] as Array<Department>,
-  two: ['male', 'female', 'preferNotToSay', 'other'] as Array<ISex>,
+  two: ['male', 'female', 'preferNotToSay'] as Array<ISex>,
   twoOther: ['Agender', 'Androgyne', 'Bigender'],
   three: ['married', 'single'] as Array<IMaritalStatus>,
   four: Object.keys(ageRangesNum) as Array<IAgeRange>,

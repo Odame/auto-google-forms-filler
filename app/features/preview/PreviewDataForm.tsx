@@ -2,7 +2,6 @@
 import { Checkbox, DatePicker, Form, Input, InputNumber, Radio } from 'antd';
 import { DatePickerProps } from 'antd/lib/date-picker';
 import { FormInstance } from 'antd/lib/form';
-import FormItem from 'antd/lib/form/FormItem';
 import { NamePath } from 'antd/lib/form/interface';
 import moment, { Moment } from 'moment';
 import React from 'react';
@@ -69,14 +68,14 @@ export default function PreviewDataForm({ initialIndex, form, data }: Props) {
                   >
                     Prefer not to say
                   </Radio>
-                  <Radio className={styles.verticalRadio} value="other">
+                  {/* <Radio className={styles.verticalRadio} value="other">
                     Other
-                  </Radio>
+                  </Radio> */}
                 </Radio.Group>
               </Form.Item>
 
               {/* render 'other' field if user chooses other from options above */}
-              <Form.Item
+              {/* <Form.Item
                 shouldUpdate={(prevValues, currentValues) =>
                   prevValues.data[index].two !== currentValues.data[index].two
                 }
@@ -96,7 +95,7 @@ export default function PreviewDataForm({ initialIndex, form, data }: Props) {
                     </Form.Item>
                   ) : null;
                 }}
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item
                 className={styles.dataFormItem}
