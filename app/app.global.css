@@ -21,6 +21,7 @@ body {
 
   /* font-family: Arial, Helvetica, Helvetica Neue, serif; */
   overflow-y: hidden;
+  user-select: none !important;
 }
 
 .page {
