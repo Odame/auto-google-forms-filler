@@ -64,7 +64,11 @@ function Submission() {
       {error ? (
         <Result
           status="warning"
-          title="There were some problems with submitting data."
+          title={`There were some problems with submitting generated data.${
+            numSubmitted > 0
+              ? `\nHowever the first ${numSubmitted} data got submitted`
+              : ''
+          }`}
           extra={
             <Button
               type="primary"
@@ -83,7 +87,7 @@ function Submission() {
           />
           <Text className={styles.progressText}>
             {numSubmitted === data.length
-              ? 'Completed'
+              ? 'All data has been submitted to Google Form'
               : 'Submitting generated data ...'}
           </Text>
           {numSubmitted !== data.length ? (
