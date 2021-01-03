@@ -11,10 +11,16 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow } from 'electron';
+import electron, { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { setupMainHandler } from 'eiphop';
+import submitGoogleForm, { configChromeDriver } from './googleFormSubmission';
 import MenuBuilder from './menu';
+
+// setup eiphop IPC actions to in order for the frontend to be
+//   able to communicate with the main process
+setupMainHandler(electron, { submitGoogleForm }, false);
 
 export default class AppUpdater {
   constructor() {
@@ -98,6 +104,7 @@ const createWindow = async () => {
       mainWindow.show();
       mainWindow.focus();
     }
+    configChromeDriver();
   });
 
   mainWindow.on('closed', () => {

@@ -1,8 +1,13 @@
 import React, { Fragment } from 'react';
+import electron from 'electron';
 import { render } from 'react-dom';
 import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
+import { setupFrontendListener } from 'eiphop';
 import { history, configuredStore } from './store';
 import './app.global.css';
+
+// configure eiphop to listen to ipc responses
+setupFrontendListener(electron);
 
 const store = configuredStore();
 
