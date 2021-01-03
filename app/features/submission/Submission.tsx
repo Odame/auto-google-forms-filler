@@ -5,20 +5,19 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CloseCircleOutlined, LeftOutlined } from '@ant-design/icons';
 
+import { emit } from 'eiphop';
 import routes from '../../constants/routes.json';
 import styles from './Submission.css';
 import { useTypedSelector } from '../../store';
+import IGeneratedData from '../generateData/types';
 
 const { Text } = Typography;
 
 function Submission() {
-  const numSamples = useTypedSelector((state) => state.controlPanel.numSamples);
+  const data = useTypedSelector((state) => state.generatedData);
   const wasPreviewPageShown = useTypedSelector(
     (state) => state.controlPanel.preEdit
   );
-  const [error, setHasError] = useState(false);
-
-  const [numSubmitted, setNumSubmitted] = useState(0);
 
   const dispatch = useDispatch();
   const goBackToPrevPage = () => {
@@ -33,6 +32,32 @@ function Submission() {
   const onCancelButtonClicked = () => {
     goBackToPrevPage();
   };
+
+  const [numSubmitted, setNumSubmitted] = useState(0);
+  const [error, setHasError] = useState(false);
+  useEffect(() => {
+    let isComponentMounted = true;
+    (async () => {
+      for (let i = 0; isComponentMounted && i < data.length; i += 1) {
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          await emit<void>('submitGoogleForm', data[i]);
+          if (isComponentMounted) setNumSubmitted((c) => c + 1);
+        } catch (err) {
+          setHasError(true);
+          // eslint-disable-next-line no-console
+          console.error(`An error occurred while submitting data: ${i}`);
+          // eslint-disable-next-line no-console
+          console.error(err);
+          break;
+        }
+      }
+    })();
+
+    return () => {
+      isComponentMounted = false; // when the component is un-mounting
+    };
+  }, [data, data.length]);
 
   return (
     <div className={styles.submission}>
@@ -54,14 +79,14 @@ function Submission() {
         <>
           <Progress
             type="circle"
-            percent={Math.floor((numSubmitted / numSamples) * 100)}
+            percent={Math.floor((numSubmitted / data.length) * 100)}
           />
           <Text className={styles.progressText}>
-            {numSubmitted === numSamples
+            {numSubmitted === data.length
               ? 'Completed'
               : 'Submitting generated data ...'}
           </Text>
-          {numSubmitted !== numSamples ? (
+          {numSubmitted !== data.length ? (
             <Button
               type="default"
               danger

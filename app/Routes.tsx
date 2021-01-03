@@ -6,6 +6,7 @@ import App from './containers/App';
 import GeneratingDataPage from './containers/GeneratingDataPage';
 import HomePage from './containers/HomePage';
 import PreviewPage from './containers/PreviewPage';
+import SubmissionPage from './containers/SubmissionPage';
 
 // Lazily load routes and code split with webpack
 const LazyCounterPage = React.lazy(() =>
@@ -25,6 +26,7 @@ export default function Routes() {
         <Route path={routes.COUNTER} component={CounterPage} />
         <Route path={routes.GENERATE_DATA} component={GeneratingDataPage} />
         <Route path={routes.PREVIEW} component={PreviewPage} />
+        <Route path={routes.SUBMISSION} component={SubmissionPage} />
         <Route path={routes.HOME} component={HomePage} />
       </Switch>
     </App>

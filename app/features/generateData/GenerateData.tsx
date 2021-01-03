@@ -23,6 +23,7 @@ import IGeneratedData, {
 } from './types';
 import routes from '../../constants/routes.json';
 import styles from './GenerateData.css';
+import { sleep } from '../../utils';
 
 const { Text } = Typography;
 
@@ -204,12 +205,6 @@ const generateRandomData = () => {
   ] = true;
 
   return data;
-};
-
-const sleep = async (timeMs: number) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeMs);
-  });
 };
 
 const GenerateData: React.FunctionComponent = () => {
