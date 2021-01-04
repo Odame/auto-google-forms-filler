@@ -1,6 +1,6 @@
 import { Button, Progress, Result, Typography } from 'antd';
 import { replace, goBack } from 'connected-react-router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CloseCircleOutlined, LeftOutlined } from '@ant-design/icons';
@@ -9,7 +9,6 @@ import { emit } from 'eiphop';
 import routes from '../../constants/routes.json';
 import styles from './Submission.css';
 import { useTypedSelector } from '../../store';
-import IGeneratedData from '../generateData/types';
 
 const { Text } = Typography;
 
@@ -17,6 +16,9 @@ function Submission() {
   const data = useTypedSelector((state) => state.generatedData);
   const wasPreviewPageShown = useTypedSelector(
     (state) => state.controlPanel.preEdit
+  );
+  const runInHeadlessMode = useTypedSelector(
+    (state) => state.controlPanel.headless
   );
 
   const dispatch = useDispatch();
@@ -41,7 +43,7 @@ function Submission() {
       for (let i = 0; isComponentMounted && i < data.length; i += 1) {
         try {
           // eslint-disable-next-line no-await-in-loop
-          await emit<void>('submitGoogleForm', data[i]);
+          await emit<void>('submitGoogleForm', [data[i], runInHeadlessMode]);
           if (isComponentMounted) setNumSubmitted((c) => c + 1);
         } catch (err) {
           setHasError(true);
@@ -57,7 +59,7 @@ function Submission() {
     return () => {
       isComponentMounted = false; // when the component is un-mounting
     };
-  }, [data, data.length]);
+  }, [data, data.length, runInHeadlessMode]);
 
   return (
     <div className={styles.submission}>

@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import { exhaustiveStringTuple } from '../../utils';
 
 type Department = 'DnM' | 'WSV' | 'BDT' | 'CPL' | 'Production';
 type ISex = 'male' | 'female' | 'preferNotToSay';
@@ -124,19 +124,61 @@ export default interface IGeneratedData {
   dateOfCompletion: string;
 }
 
-const five: Array<IEducationLevel> = [
-  'certificate',
-  'diploma',
-  'undergraduateDiploma',
-  'postgraduateDiploma',
-];
+const fourMultiSelectChoices = exhaustiveStringTuple<FourOptions>()(
+  'a',
+  'b',
+  'c',
+  'd'
+);
+/** The possible options for single-select multiple-choice data fields.
+ *
+ * NB: The options for each data field is in the same order of appearance in the Google Form
+ */
 export const dataFieldChoices = {
   one: ['DnM', 'WSV', 'BDT', 'CPL', 'Production'] as Array<Department>,
-  two: ['male', 'female', 'preferNotToSay'] as Array<ISex>,
+  two: exhaustiveStringTuple<ISex>()('female', 'male', 'preferNotToSay'),
   twoOther: ['Agender', 'Androgyne', 'Bigender'],
   three: ['married', 'single'] as Array<IMaritalStatus>,
-  four: Object.keys(ageRangesNum) as Array<IAgeRange>,
-  five,
-  six: Object.keys(workExperienceRangesNum) as Array<IWorkExperienceRange>,
-  eight: ['yes', 'no', 'maybe'] as Array<YesNoMaybe>,
+  four: exhaustiveStringTuple<IAgeRange>()(
+    'from18To25',
+    'from25To35',
+    'from35To45',
+    'from45To55',
+    'from55To60',
+    'over60'
+  ),
+  five: exhaustiveStringTuple<IEducationLevel>()(
+    'certificate',
+    'diploma',
+    'undergraduateDiploma',
+    'postgraduateDiploma'
+  ),
+  six: exhaustiveStringTuple<IWorkExperienceRange>()(
+    'from1To5',
+    'from5To10',
+    'from10To15',
+    'from15To20',
+    'from20To25',
+    'above26'
+  ),
+  twentyFive: exhaustiveStringTuple<YearDivision>()(
+    'monthly',
+    'quarterly',
+    'yearly'
+  ),
+  yesNoMaybe: exhaustiveStringTuple<YesNoMaybe>()('yes', 'no', 'maybe'),
+  yesNo: exhaustiveStringTuple<YesNo>()('yes', 'no'),
+  fourMultiSelect: fourMultiSelectChoices,
+  sixMultiSelect: exhaustiveStringTuple<SixOptions>()(
+    ...fourMultiSelectChoices,
+    'e',
+    'f'
+  ),
+  sevenMultiSelect: exhaustiveStringTuple<SevenOptions>()(
+    ...fourMultiSelectChoices,
+    'e',
+    'f',
+    'g'
+  ),
+  scaleOf5: [1, 2, 3, 4, 5] as Array<IScaleOf5>,
 };

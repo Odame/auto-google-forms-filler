@@ -64,10 +64,8 @@ const randomWorkExperience = (age: IAgeRange): IWorkExperienceRange => {
 /**
  * Generate a random date string
  * @param startDate The oldest possible date (inclusive) to start from.
- * Should be in the format DD-MM-YYYY, DD.MM.YYYY, DD/MM/YYYY
  * @param upToNumDays The random number of days to shift into the future, from `startDate`.
  * @param endDate The earliest date possible date.
- * Should be in the format DD-MM-YYYY, DD.MM.YYYY, DD/MM/YYYY
  */
 const randomDate = (
   startDate: moment.Moment,
@@ -105,7 +103,7 @@ const generateRandomData = () => {
       1,
       Math.max(MAX_YEARS_WITH_ENI, workExperienceRangesNum[workExperience][1])
     ),
-    eight: randomChoice(dataFieldChoices.eight),
+    eight: randomChoice(dataFieldChoices.yesNoMaybe),
     nine: {
       a: randBool(),
       b: randBool(),
@@ -234,7 +232,7 @@ const GenerateData: React.FunctionComponent = () => {
        */
       const intentionalDelay =
         (Math.max(1, Math.min(0.75 * numDataSamples, 2)) / numDataSamples) *
-        1000;
+        500;
       // stop generating data if component is no longer mounted
       for (let i = 0; isComponentMounted && i < numDataSamples; i += 1) {
         const data = generateRandomData();
