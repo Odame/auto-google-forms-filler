@@ -7,8 +7,8 @@ type ControlPanelData = {
   rememberOptions: boolean;
 };
 export const defaultControlPanelData = {
-  numSamples: 10,
-  headless: false,
+  numSamples: 1,
+  headless: true,
   preEdit: true,
   rememberOptions: true,
 };
