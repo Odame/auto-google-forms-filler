@@ -3,7 +3,11 @@ import { replace, goBack } from 'connected-react-router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CloseCircleOutlined, LeftOutlined } from '@ant-design/icons';
+import {
+  CloseCircleOutlined,
+  LeftOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 
 import { emit } from 'eiphop';
 import routes from '../../constants/routes.json';
@@ -86,12 +90,21 @@ function Submission() {
           <Progress
             type="circle"
             percent={Math.floor((numSubmitted / data.length) * 100)}
+            status={numSubmitted !== data.length ? 'active' : undefined}
           />
-          <Text className={styles.progressText}>
-            {numSubmitted === data.length
-              ? 'All data has been submitted to Google Form'
-              : 'Submitting generated data ...'}
-          </Text>
+
+          <div className={styles.progressTextContainer}>
+            {numSubmitted !== data.length ? (
+              <LoadingOutlined
+                style={{ fontSize: '24px', margin: '0px 8px' }}
+              />
+            ) : null}
+            <Text className={styles.progressText}>
+              {numSubmitted === data.length
+                ? 'All data has been submitted to Google Form'
+                : `Submitting generated data. Completed ${numSubmitted} out of ${data.length}`}
+            </Text>
+          </div>
           {numSubmitted !== data.length ? (
             <Button
               type="default"

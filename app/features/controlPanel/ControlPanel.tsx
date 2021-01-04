@@ -62,7 +62,7 @@ function ControlPanel({ className }: Props) {
       </Form.Item>
 
       <Form.Item name="preEdit" valuePropName="checked">
-        <Checkbox>Show preview to allow pre-editing before submit</Checkbox>
+        <Checkbox>Show preview to allow editing before submission</Checkbox>
       </Form.Item>
 
       <Form.Item>
